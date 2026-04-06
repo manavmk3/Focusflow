@@ -27,7 +27,7 @@ html {
 }
 
 body {
-  font-family: 'Cabinet Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -92,16 +92,12 @@ body {
 .logo-icon {
   width: 34px;
   height: 34px;
-  background: var(--accent);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
+  object-fit: cover;
 }
 
 .logo-text {
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
   font-weight: 900;
   font-size: 20px;
   color: var(--text);
@@ -129,8 +125,10 @@ body {
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   color: var(--text2);
-  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
   font-weight: 500;
+  letter-spacing: 0.3px;
   cursor: pointer;
   transition: all 0.2s;
   margin-bottom: 2px;
@@ -183,7 +181,7 @@ body {
   color: var(--accent3);
   font-size: 22px;
   display: block;
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
 }
 
 .main {
@@ -217,7 +215,7 @@ body {
 }
 
 .page-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
   font-weight: 900;
   font-size: 36px;
   letter-spacing: -1px;
@@ -310,7 +308,7 @@ body {
 }
 
 .stat-value {
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
   font-size: 38px;
   font-weight: 900;
   line-height: 1;
@@ -340,7 +338,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text);
-  font-family: 'Cabinet Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   padding: 11px 14px;
   outline: none;
@@ -366,7 +364,7 @@ select option {
   padding: 11px 20px;
   border-radius: var(--radius-sm);
   border: none;
-  font-family: 'Cabinet Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -462,7 +460,7 @@ select option {
 .todo-meta {
   font-size: 11px;
   color: var(--text3);
-  font-family: 'DM Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .tag {
@@ -470,7 +468,7 @@ select option {
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 20px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.3px;
 }
 
@@ -513,7 +511,7 @@ select option {
 .goal-deadline {
   font-size: 11px;
   color: var(--text3);
-  font-family: 'DM Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .progress-bar-wrap {
@@ -539,7 +537,7 @@ select option {
 }
 
 .timer-display {
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
   font-size: 88px;
   font-weight: 900;
   letter-spacing: -4px;
@@ -636,7 +634,7 @@ select option {
 .note-date {
   font-size: 11px;
   color: var(--text3);
-  font-family: 'DM Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   margin-top: 10px;
 }
 
@@ -829,7 +827,7 @@ select option {
 }
 
 .modal-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
   font-size: 22px;
   font-weight: 900;
   margin-bottom: 20px;
@@ -892,7 +890,7 @@ select option {
   color: var(--text2);
   border: none;
   background: none;
-  font-family: 'Cabinet Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
   transition: all 0.2s;
 }
 
@@ -963,7 +961,7 @@ select option {
 }
 
 .quote-text {
-  font-family: 'Fraunces', serif;
+  font-family: 'Outfit', serif;
   font-style: italic;
   font-size: 17px;
   color: var(--text);
@@ -973,5 +971,6 @@ select option {
   font-size: 12px;
   color: var(--text3);
   margin-top: 8px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
 }
+
