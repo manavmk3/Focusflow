@@ -107,29 +107,37 @@
     </div>
 
     <div class="page" id="page-todo">
-      <div class="page-header">
+      <div class="page-header" style="margin-bottom:20px;">
         <div class="page-title">To-Do <span>List</span></div>
         <div class="page-sub">Manage your tasks and stay on top of your work</div>
       </div>
 
-      <div class="card" style="margin-bottom:20px;">
-        <div class="input-row" style="flex-wrap:wrap;gap:8px;">
-          <input type="text" id="todo-input" placeholder="Add a new task..." style="min-width:200px;">
-          <select id="todo-priority">
-            <option value="high">🔴 High</option>
-            <option value="med" selected>🟡 Medium</option>
-            <option value="low">🔵 Low</option>
-          </select>
-          <select id="todo-subject">
-            <option value="Math">Math</option>
-            <option value="Science">Science</option>
-            <option value="English">English</option>
-            <option value="History">History</option>
-            <option value="CS">CS</option>
-            <option value="Other">Other</option>
-          </select>
-          <input type="date" id="todo-due" style="max-width:150px;">
-          <button class="btn btn-accent" onclick="addTodo()">+ Add Task</button>
+      <div class="todo-stats-row">
+        <div class="ts-badge"><span class="icon">✅</span> <strong id="ts-total">0</strong> Tasks</div>
+        <div class="ts-badge ts-pending"><span class="icon">⏳</span> <strong id="ts-pending">0</strong> Pending</div>
+        <div class="ts-badge ts-done"><span class="icon">✔️</span> <strong id="ts-done">0</strong> Completed</div>
+      </div>
+
+      <div class="card input-card" style="margin-bottom:24px;">
+        <div class="input-row" style="flex-wrap:wrap;gap:12px;">
+          <input type="text" id="todo-input" placeholder="✨ What do you want to accomplish today?" style="min-width:100%; font-size:16px; padding:16px;">
+          <div style="display:flex; gap:12px; flex:1; flex-wrap:wrap;">
+            <select id="todo-priority">
+              <option value="high">🔴 High Priority</option>
+              <option value="med" selected>🟡 Medium Priority</option>
+              <option value="low">🟢 Low Priority</option>
+            </select>
+            <select id="todo-subject">
+              <option value="Math">🔢 Math</option>
+              <option value="Science">🔬 Science</option>
+              <option value="English">📚 English</option>
+              <option value="History">🏛️ History</option>
+              <option value="CS">💻 CS</option>
+              <option value="Other">📝 Other</option>
+            </select>
+            <input type="date" id="todo-due" style="max-width:160px;">
+            <button class="btn btn-accent" style="flex:1; padding:14px; font-size:15px; box-shadow:0 8px 25px rgba(16,185,129,0.3);" onclick="addTodo()">+ Add Task</button>
+          </div>
         </div>
       </div>
 
@@ -473,7 +481,7 @@ function addTodo() {
   });
   document.getElementById('todo-input').value = '';
   document.getElementById('todo-due').value = '';
-  renderTodos(); saveState(); updateBadge(); showToast('Task added!');
+  renderTodos(); saveState(); updateBadge(); updateStats(); showToast('Task added!');
 }
 
 function toggleTodo(id) {
@@ -484,11 +492,13 @@ function toggleTodo(id) {
   }
   renderTodos(); saveState(); updateBadge(); refreshDashboard();
   updateStats();
+  
+  if (t && t.done) checkAllDone();
 }
 
 function deleteTodo(id) {
   state.todos = state.todos.filter(t => t.id !== id);
-  renderTodos(); saveState(); updateBadge();
+  renderTodos(); saveState(); updateBadge(); updateStats();
 }
 
 let todoFilter = 'all';
@@ -510,13 +520,17 @@ function renderTodos() {
     return;
   }
   list.innerHTML = todos.map(t => `
-    <div class="todo-item ${t.done?'done':''}" id="todo-${t.id}">
-      <div class="todo-check ${t.done?'checked':''}" onclick="toggleTodo(${t.id})">${t.done?'✓':''}</div>
+    <div class="todo-item card-based ${t.done?'done':''} priority-${t.priority}" id="todo-${t.id}">
+      <div class="todo-check ${t.done?'checked':''}" onclick="toggleTodo(${t.id})">
+        ${t.done ? '<span class="tick-icon">✓</span>' : ''}
+      </div>
       <div style="flex:1;">
         <div class="todo-text">${escHtml(t.text)}</div>
-        <div style="display:flex;gap:6px;align-items:center;margin-top:4px;">
-          <span class="tag tag-${t.priority}">${t.priority.toUpperCase()}</span>
-          <span class="todo-meta">${t.subject}</span>
+        <div class="todo-meta-row" style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+          <span class="tag tag-${t.priority}">
+            ${t.priority === 'high' ? '🔴 High' : t.priority === 'med' ? '🟡 Med' : '🟢 Low'}
+          </span>
+          <span class="todo-meta">🏷️ ${t.subject}</span>
           ${t.due ? `<span class="todo-meta">📅 ${t.due}</span>` : ''}
         </div>
       </div>
@@ -531,8 +545,40 @@ function updateBadge() {
 }
 
 function updateStats() {
+  const total = state.todos.length;
   const done = state.todos.filter(t => t.done).length;
-  document.getElementById('stat-done').textContent = done;
+  const pending = total - done;
+
+  const statDoneEl = document.getElementById('stat-done');
+  if (statDoneEl) statDoneEl.textContent = done;
+  
+  const elTotal = document.getElementById('ts-total');
+  const elPending = document.getElementById('ts-pending');
+  const elDone = document.getElementById('ts-done');
+  
+  if (elTotal) {
+    elTotal.textContent = total;
+    elPending.textContent = pending;
+    elDone.textContent = done;
+  }
+}
+
+function checkAllDone() {
+  const total = state.todos.length;
+  const done = state.todos.filter(t => t.done).length;
+  if (total > 0 && total === done) shootConfetti();
+}
+
+function shootConfetti() {
+  for (let i = 0; i < 60; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+    confetti.style.backgroundColor = ['#10b981', '#6366f1', '#f59e0b', '#ef4444'][Math.floor(Math.random() * 4)];
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 5000);
+  }
 }
 
 function addGoal() {

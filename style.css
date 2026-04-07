@@ -1,19 +1,19 @@
 :root {
-  --bg: #0e0f14;
-  --surface: rgba(22, 24, 32, 0.65);
-  --surface2: rgba(30, 32, 41, 0.75);
-  --surface3: rgba(39, 42, 54, 0.75);
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #c8f04e;
-  --accent2: #7c6af5;
-  --accent3: #f5a623;
-  --accent4: #f06b6b;
-  --text: #e8eaf2;
-  --text2: #9296a8;
-  --text3: #5a5e72;
+  --bg: #0f172a;
+  --surface: rgba(30, 41, 59, 0.85);
+  --surface2: rgba(51, 65, 85, 0.7);
+  --surface3: rgba(71, 85, 105, 0.6);
+  --border: rgba(255, 255, 255, 0.12);
+  --accent: #10b981;
+  --accent2: #6366f1;
+  --accent3: #f59e0b;
+  --accent4: #ef4444;
+  --text: #f8fafc;
+  --text2: #cbd5e1;
+  --text3: #94a3b8;
   --radius: 16px;
   --radius-sm: 10px;
-  --glow: 0 0 30px rgba(200, 240, 78, 0.12);
+  --glow: 0 0 30px rgba(16, 185, 129, 0.2);
 }
 
 * {
@@ -169,20 +169,25 @@ body {
 }
 
 .nav-link:hover {
-  background: var(--surface3);
+  background: var(--surface2);
   color: var(--text);
+  transform: translateX(4px);
+}
+.nav-link:hover .icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .nav-link.active {
-  background: rgba(200, 240, 78, 0.15);
+  background: rgba(16, 185, 129, 0.15);
   color: var(--accent);
-  box-shadow: inset 2px 0 0 var(--accent);
+  box-shadow: inset 4px 0 0 var(--accent);
 }
 
 .nav-link .icon {
   font-size: 18px;
   width: 22px;
   text-align: center;
+  transition: transform 0.2s ease;
 }
 
 .nav-link .badge {
@@ -248,14 +253,20 @@ body {
 .page-title {
   font-family: 'Outfit', serif;
   font-weight: 900;
-  font-size: 36px;
+  font-size: 44px;
   letter-spacing: -1px;
-  line-height: 1;
+  line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
 .page-title span {
-  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   font-style: italic;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.3));
+  padding-right: 0.15em;
 }
 
 .page-sub {
@@ -412,13 +423,13 @@ select option {
 }
 
 .btn-accent {
-  background: linear-gradient(135deg, var(--accent) 0%, #aade1e 100%);
-  color: var(--bg);
-  box-shadow: 0 4px 15px rgba(200, 240, 78, 0.2);
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
 }
 
 .btn-accent:hover {
-  background: linear-gradient(135deg, #d8ff5e 0%, #b8f02e 100%);
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
   box-shadow: var(--glow);
   transform: translateY(-2px);
 }
@@ -1014,9 +1025,112 @@ select option {
 }
 
 .quote-author {
-  font-size: 12px;
-  color: var(--text3);
+  font-size: 13px;
+  color: var(--text2);
   margin-top: 8px;
-  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
 }
 
+.todo-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ts-badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ts-badge strong {
+  color: var(--text);
+  font-size: 20px;
+  font-family: 'Outfit', serif;
+}
+
+.ts-badge.ts-pending {
+  border-left: 4px solid var(--accent3);
+}
+
+.ts-badge.ts-done {
+  border-left: 4px solid var(--accent);
+}
+
+.input-card {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.card-based {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-left-width: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-based.priority-high {
+  border-left-color: var(--accent4);
+}
+.card-based.priority-med {
+  border-left-color: var(--accent3);
+}
+.card-based.priority-low {
+  border-left-color: var(--accent);
+}
+
+.card-based:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  background: var(--surface);
+}
+
+.card-based.done {
+  opacity: 0.6;
+  border-left-color: var(--text3);
+}
+
+.card-based.done .todo-text {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.tick-icon {
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent);
+  z-index: 1000;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
